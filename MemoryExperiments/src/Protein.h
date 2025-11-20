@@ -2,7 +2,6 @@
 #define TIMER_H
 #pragma once
 
-#include <PointR3.h>
 
 class Protein {
 public:

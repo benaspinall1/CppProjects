@@ -3,6 +3,8 @@
 #include <array>
 #include "PointR3.h"
 #include "Timer.h"
+#include "FileReader.h"
+
 
 
 
@@ -13,6 +15,9 @@ int main()
 
 	std::string point_name = "Point 1";
 	PointR3 point(point_name);
+
+
+	FileReader file_reader("src\\1A3N.cif");
 
 
 	point.Print();
