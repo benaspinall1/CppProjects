@@ -21,7 +21,7 @@
     <ClCompile Include="src\Timer.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
-    <ClCompile Include="src\PointR3.cpp">
+    <ClCompile Include="src\Atom.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
     <ClCompile Include="src\Protein.cpp">
@@ -35,7 +35,7 @@
     <ClInclude Include="src\Timer.h">
       <Filter>Header Files</Filter>
     </ClInclude>
-    <ClInclude Include="src\PointR3.h">
+    <ClInclude Include="src\Atom.h">
       <Filter>Header Files</Filter>
     </ClInclude>
     <ClInclude Include="src\Protein.h">
