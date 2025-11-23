@@ -4,31 +4,35 @@
 #include <string>
 #include <filesystem>
 #include <array>
+#include <sstream>
 #include "FileReader.h"
-#include "Timer.h"
 #include "Atom.h"
+#include "ProteinSegment.h"
 
 
-FileReader::FileReader(const char* file_name)
-{
-    Timer time;
+
+ProteinSegment FileReader::segment_from_file(const char* file_name) {
 
     std::ifstream file(file_name);
-
+    ProteinSegment segment;
     if (!file.is_open()) {
         std::cerr << "ERROR: Could not open file: " << file_name << "\n";
-        return;
+        return ProteinSegment{};
     }
 
     std::string line;
 
     while (std::getline(file, line)) {
 
-        atom_from_line(line);
-
+        Atom atom  = atom_from_line(line);
+        // add to the protein segment coordinates
     }
 
-};
+
+    return segment;
+}
+
+
 
 std::array<std::string, 4> FileReader::split(const std::string& file_line) {
 
@@ -57,16 +61,24 @@ std::array<std::string, 4> FileReader::split(const std::string& file_line) {
     return atom_info;
 }
 
-void FileReader::atom_from_line(std::string& file_line) {
+Atom FileReader::atom_from_line(std::string& file_line) {
 
     auto atom_info = split(file_line);
 
 
     std::string atom_type = atom_info[0];
+
+
     double x = std::stod(atom_info[1]); 
     double y = std::stod(atom_info[2]); 
     double z = std::stod(atom_info[3]); 
     std::cout << atom_type << " " << x << " " << y << " " << z << "\n";
 
+    int type = 0;
+    Atom atom;
+    atom.set_atom_type(atom_type);
+    atom.set_coordinates(x, y, z);
+    
 
+    return atom;
 }

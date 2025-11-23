@@ -11,7 +11,7 @@
 int main() 
 {
 
-	FileReader file_reader("src\\1A3N.cif");
-
+	FileReader file_reader;
+	file_reader.segment_from_file("src\\1A3N.cif");
 }
 
