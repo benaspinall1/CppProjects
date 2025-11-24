@@ -2,7 +2,6 @@
 #include <fstream>
 #include <iostream>
 #include <string>
-#include <filesystem>
 #include <array>
 #include <sstream>
 #include "FileReader.h"
@@ -10,25 +9,33 @@
 #include "ProteinSegment.h"
 
 
-
-ProteinSegment FileReader::segment_from_file(const char* file_name) {
+const ProteinSegment FileReader::segment_from_file(const char* file_name, int start, int end) {
 
     std::ifstream file(file_name);
-    ProteinSegment segment;
+
+    std::cout << "About to create a segment \n";
+    const ProteinSegment segment(start, end);
+    
     if (!file.is_open()) {
         std::cerr << "ERROR: Could not open file: " << file_name << "\n";
         return ProteinSegment{};
     }
 
     std::string line;
-
-    while (std::getline(file, line)) {
-
+    int i = 0;
+    while (i < segment.get_length() && std::getline(file, line)) {
+        auto info = split(line);
         Atom atom  = atom_from_line(line);
-        // add to the protein segment coordinates
+        segment.coordinates[i] = atom;
+        i++;
     }
 
-
+    std::cout << "Done creating segment \n";
+    /*
+    I learned that this only calls the move constructor when the function doesn't return a const object
+    because of some called name return value optimization. I will look into that concept next. I will then create 
+    more version of this function to further my experiments.
+    */
     return segment;
 }
 
@@ -36,7 +43,6 @@ ProteinSegment FileReader::segment_from_file(const char* file_name) {
 
 std::array<std::string, 4> FileReader::split(const std::string& file_line) {
 
-    //TODO: Next step is to skip all incidies expect 2,10,11, and 12 then store them in the array to build the atom.
     const int tokens_in_line = 21;
     std::istringstream iss(file_line);
     std::array<std::string, 4> atom_info {};
@@ -61,24 +67,20 @@ std::array<std::string, 4> FileReader::split(const std::string& file_line) {
     return atom_info;
 }
 
-Atom FileReader::atom_from_line(std::string& file_line) {
+Atom FileReader::atom_from_line(const std::string& file_line) {
 
     auto atom_info = split(file_line);
 
-
     std::string atom_type = atom_info[0];
+    double x = 0.0, y = 0.0, z = 0.0;
+    x = std::stod(atom_info[1]);
+    y = std::stod(atom_info[2]);
+    z = std::stod(atom_info[3]);
+    //std::cout << atom_info[0] << " " << atom_info[1] << " " << atom_info[2] << " " << atom_info[3] << "\n";
 
-
-    double x = std::stod(atom_info[1]); 
-    double y = std::stod(atom_info[2]); 
-    double z = std::stod(atom_info[3]); 
-    std::cout << atom_type << " " << x << " " << y << " " << z << "\n";
-
-    int type = 0;
     Atom atom;
     atom.set_atom_type(atom_type);
     atom.set_coordinates(x, y, z);
-    
 
     return atom;
 }

@@ -24,7 +24,7 @@
     <ClCompile Include="src\Atom.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
-    <ClCompile Include="src\Protein.cpp">
+    <ClCompile Include="src\ProteinSegment.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
     <ClCompile Include="src\FileReader.cpp">
@@ -38,7 +38,7 @@
     <ClInclude Include="src\Atom.h">
       <Filter>Header Files</Filter>
     </ClInclude>
-    <ClInclude Include="src\Protein.h">
+    <ClInclude Include="src\ProteinSegment.h">
       <Filter>Header Files</Filter>
     </ClInclude>
     <ClInclude Include="src\FileReader.h">
